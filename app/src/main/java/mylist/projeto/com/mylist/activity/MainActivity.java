@@ -8,8 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import mylist.projeto.com.mylist.R;
 import mylist.projeto.com.mylist.adapter.ListasAdapter;
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private ListView lista;
 
+    public static final ArrayList<String> LISTAS = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +30,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         android.app.ActionBar actionBar = getActionBar();
 
-//        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);*/
+        recebeDados();
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, LISTAS);
 
         lista = (ListView) findViewById(R.id.lvListas);
-        lista.setAdapter(new ListasAdapter(this));
+        lista.setAdapter(adapter);
 
         lista.setOnItemClickListener(this);
 
@@ -42,6 +49,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent);
             }
         });
+    }
+
+    public void recebeDados(){
+        Bundle args = getIntent().getExtras();
+
+        if (args != null) {
+            String nomeNovaLista = args.getString("nomeNovaLista");
+            if (nomeNovaLista != null){
+                LISTAS.add(nomeNovaLista);
+            }
+        }
     }
 
     @Override

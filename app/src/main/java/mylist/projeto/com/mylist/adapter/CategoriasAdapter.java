@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import mylist.projeto.com.mylist.R;
 
 /**
@@ -14,28 +16,27 @@ import mylist.projeto.com.mylist.R;
  */
 public class CategoriasAdapter extends BaseAdapter {
 
-    private String[] categorias = new String[]{
-            "Frios",
-            "Legumes",
-            "Carne",
-            "Bebidas"
+    private static final String[] CATEGORIAS = new String[]{
+
     };
 
     private Context context;
+    private ArrayList<String> categorias;
 
-    public CategoriasAdapter(Context context) {
+    public CategoriasAdapter(Context context, ArrayList<String> categorias) {
         super();
         this.context = context;
+        this.categorias = categorias;
     }
 
     @Override
     public int getCount() {
-        return categorias.length;
+        return CATEGORIAS.length;
     }
 
     @Override
     public Object getItem(int i) {
-        return categorias[i];
+        return CATEGORIAS[i];
     }
 
     @Override
@@ -46,7 +47,7 @@ public class CategoriasAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
 
-        String lista = categorias[i];
+        String lista = CATEGORIAS[i];
         View view = LayoutInflater.from(context).inflate(R.layout.listas, viewGroup, false);
         TextView txtListas = (TextView) view.findViewById(R.id.txt_listas);
         txtListas.setText(lista);

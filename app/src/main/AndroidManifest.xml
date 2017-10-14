@@ -25,9 +25,10 @@
             android:name=".activity.NovaListaActivity"
             android:label="@string/title_activity_nova_lista"
             android:theme="@style/AppTheme">
-
         </activity>
-        <activity android:name=".activity.CategoriaActivity">
+        <activity
+            android:name=".activity.CategoriaActivity"
+            android:label="@string/title_activity_categoria">
 
         </activity>
     </application>

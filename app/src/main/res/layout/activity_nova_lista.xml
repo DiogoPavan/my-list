@@ -8,17 +8,11 @@
     tools:context="mylist.projeto.com.mylist.activity.NovaListaActivity"
     tools:showIn="@layout/activity_nova_lista">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nova_lista"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <EditText
         android:id="@+id/edtNomeNovaLista"
         android:layout_width="@dimen/dimen_dp_300"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_15"
         android:hint="@string/hint_nova_lista"
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray" />
@@ -26,7 +20,27 @@
     <ListView
         android:id="@+id/lvCategoria"
         android:layout_width="@dimen/dimen_dp_300"
-        android:layout_height="@dimen/dimen_dp_450"
+        android:layout_height="@dimen/dimen_dp_300"
         android:divider="@null"/>
+
+    <Button
+        android:id="@+id/btnAddCategoria"
+        android:layout_width="@dimen/dimen_dp_300"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_15"
+        android:background="@drawable/btn_design_white"
+        android:onClick="toAdicionarCategoria"
+        android:text="@string/btn_add_categoria"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <Button
+        android:id="@+id/btnCriarLista"
+        android:layout_width="@dimen/dimen_dp_300"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_5"
+        android:background="@drawable/btn_design"
+        android:onClick="criarLista"
+        android:text="@string/btn_criar_lista"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

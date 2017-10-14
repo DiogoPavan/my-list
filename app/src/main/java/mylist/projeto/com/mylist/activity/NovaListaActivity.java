@@ -1,5 +1,6 @@
 package mylist.projeto.com.mylist.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,15 +9,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import mylist.projeto.com.mylist.R;
 import mylist.projeto.com.mylist.adapter.CategoriasAdapter;
 
 public class NovaListaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private ListView categoria;
+    public ListView categoria;
+
+    public static final ArrayList<String> CATEGORIAS = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +32,51 @@ public class NovaListaActivity extends AppCompatActivity implements AdapterView.
 
         android.app.ActionBar actionBar = getActionBar();
 
+        recebeDados();
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CATEGORIAS);
+
+        CategoriasAdapter adapter2 = new CategoriasAdapter(this, CATEGORIAS);
+
         categoria = (ListView) findViewById(R.id.lvCategoria);
-        categoria.setAdapter(new CategoriasAdapter(this));
-
+        categoria.setAdapter(adapter);
         categoria.setOnItemClickListener(this);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+    public void recebeDados(){
+        Bundle args = getIntent().getExtras();
+
+        if (args != null) {
+            String nomeCategoria = args.getString("nomeCategoria");
+
+            if (nomeCategoria != null){
+                CATEGORIAS.add(nomeCategoria);
             }
-        });
+        }
+    }
+
+    public void toAdicionarCategoria(View v) {
+
+        Intent intent = new Intent(this, CategoriaActivity.class);
+        startActivity(intent);
+    }
+
+    public void criarLista (View v){
+        EditText edtNomeNovaLista = (EditText) findViewById(R.id.edtNomeNovaLista);
+        String nomeNovaLista = edtNomeNovaLista.getText().toString();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            Bundle parametros = new Bundle();
+            parametros.putString("nomeNovaLista", nomeNovaLista);
+
+        if (!parametros.getString("nomeNovaLista").equals("")) {
+            intent.putExtras(parametros);
+            startActivity(intent);
+            finish();
+        } else {
+            toastNomeNovaListaEmpty();
+        }
     }
 
     @Override
@@ -67,5 +106,9 @@ public class NovaListaActivity extends AppCompatActivity implements AdapterView.
         String s = (String) adapterView.getAdapter().getItem(i);
         Toast.makeText(this, "Texto selecionado: " + s + "posicao: " + i,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    private void toastNomeNovaListaEmpty() {
+        Toast.makeText(this, "Nome da lista está vazio", Toast.LENGTH_SHORT).show();
     }
 }
